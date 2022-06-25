@@ -1,95 +1,195 @@
 
  const board = document.querySelector('.gameboard')
  const cells = document.querySelectorAll('[data-cellid]');
-
-
-
-const Gameboard = (() => {
-    const gameboard = [];
-    
-   
-
-   
-     
-   
-    
-    const renderGameboard = () => {
-        
-      for(let i=0; i < cells.length; i++) {
-         cells[i].setAttribute('data-cellid', i)
-        cells[i].textContent = gameboard[i]
-      
-        
-      }
-
-
-    } 
-
-    const setCell = (index, marker)  => {
-      gameboard[index] = marker
-    }
-
-    
-
-    return {
-        renderGameboard,
-        setCell,
-        gameboard,
-        
-
-    }
-})();
-
-Gameboard.renderGameboard();
-
-
-
-const playerFactory = (name, marker) => {
+ let gameActive;
+ let startGame = document.getElementById('startBtn');
+  let turn = 1;
   
-   getname = () => name
-   getmarker = () => marker
 
+
+
+
+ const playerFactory = (name, marker) => {
   
-  return {
-   
-    name, marker
-  }
+  getname = () => name
+  getmarker = () => marker
 
-
-
+ 
+ return {
+  
+   name, marker
+ }
 };
 
 const player1 = playerFactory('player1', "X");
 
-const player2 = playerFactory('player2', "0");
-
-console.log({player1, player2})
+const player2 = playerFactory('player2', "O");
 
 
-const displayController = (() => {
+const Gameboard = (() => {
+    const gameboard = [];
+    let currentplayer = player1;
+    
+   
+    function switchPlayer() {
+     
+      if (turn===1) {
+        currentplayer = player1;
+        turn = 0;
+      } 
+      if(turn === 0) {
+        currentplayer = player2;
+        turn = 1;
+      }
+    } 
+    
+   
+
+    function addMarker() {
+      for( let cell of cells) {
+        cell.addEventListener("click", function() {
+        
+         
+          
+          
+            cell.textContent = `${currentplayer.marker}`;
+            cell.classList.add(`${currentplayer.marker}`);
+            gameboard.push(currentplayer.marker);
+            switchPlayer();
+         
+            
+            
+            
+             
+
+           
+              
+             
+             
   
-   const  display = () => {
-
-     cells.forEach((element) => {
-       element.addEventListener('click', () => {
 
 
-         element.textContent = `${player2.marker}`;
-         Gameboard.gameboard.push(player2.marker);
+      
+         
+        })
+       }
+    }  
 
-       });
-     });
+    
+  
 
-   }; 
+   
+  
+      
+
+ 
+
+   
+
+ 
+    
+    function getBoard() {
+    return [...gameboard];
+  }
+
+
+  
+
+   
+     
+    return {
+      addMarker,
+      
+      getBoard,
+      
+      
+
+  }
+})();
+    
+
+Gameboard.addMarker();
+
+  
+
+   
+
+   
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const gameFlow = (() => {
+
+  let currentplayer = player1;
+
+  const winCombinations = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
+  ]
+
+ 
+
+  function gameRound() {
+    
+   firstTurn()
+   Gameboard.getBoard
+   Gameboard.renderGameboard
+ 
+   switchPlayer
+
+  
+  }
+  
+  
+  
+  
+  
+  const switchPlayer = () => {
+    currentplayer === player1 ? (currentplayer ===player2) : (currentplayer === player1);
+
+   }
+
+   function firstTurn() {
+    return currentplayer;
+  }
+    
    
    return {
-    display
+    
+    gameRound,
+    switchPlayer,
+    firstTurn,
+
+    
    };
 
 })();   
      
     
-  displayController.display();
+
+
+
+ 
   
   
  
@@ -97,5 +197,5 @@ const displayController = (() => {
   
 
 
-
-
+//cells.forEach(cell => cell.addEventListener('click',Gameboard.renderGameboard) )
+  //startGame.addEventListener('click', gameflow.setStage);
