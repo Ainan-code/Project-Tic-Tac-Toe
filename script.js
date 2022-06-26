@@ -29,7 +29,9 @@ const player2 = playerFactory('player2', "O");
 const Gameboard = (() => {
     const gameboard = [];
     let currentplayer = player1;
-    let turn = 1;
+    const player1array = [];
+    const player2array = [];
+    
     
    
     function switchPlayer() {
@@ -50,14 +52,23 @@ const Gameboard = (() => {
       for( let cell of cells) {
         cell.addEventListener("click", function() {
         
+
+          if(cell.textContent !== "") {
+            return;
+          }
          
-          
-           //  cell.getAttribute("data-cellid");    
+
+          if(cell.textContent == "") {
+            let spot = parseInt(cell.getAttribute("data-cellid"));    
             cell.textContent = `${currentplayer.marker}`;
             cell.classList.add(`${currentplayer.marker}`);
             gameboard.push(currentplayer.marker);
+            `${currentplayer.marker}`== player1 ? player1array.push(spot) : player2array.push(spot);
             switchPlayer();
          
+          }
+          
+           
             
           
         })
@@ -92,6 +103,8 @@ const Gameboard = (() => {
       addMarker,
       
       getBoard,
+      player1array,
+      player2array,
       
       
 
