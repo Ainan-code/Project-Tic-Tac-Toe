@@ -3,7 +3,7 @@
  const cells = document.querySelectorAll('[data-cellid]');
  let gameActive;
  let startGame = document.getElementById('startBtn');
-  let turn = 1;
+ 
   
 
 
@@ -29,17 +29,18 @@ const player2 = playerFactory('player2', "O");
 const Gameboard = (() => {
     const gameboard = [];
     let currentplayer = player1;
+    let turn = 1;
     
    
     function switchPlayer() {
      
-      if (turn===1) {
-        currentplayer = player1;
-        turn = 0;
-      } 
-      if(turn === 0) {
+      if (currentplayer == player1) {
         currentplayer = player2;
-        turn = 1;
+        
+      } 
+      else {
+        currentplayer = player1;
+        
       }
     } 
     
@@ -51,32 +52,22 @@ const Gameboard = (() => {
         
          
           
-          
+           //  cell.getAttribute("data-cellid");    
             cell.textContent = `${currentplayer.marker}`;
             cell.classList.add(`${currentplayer.marker}`);
             gameboard.push(currentplayer.marker);
             switchPlayer();
          
             
-            
-            
-             
-
-           
-              
-             
-             
-  
-
-
-      
-         
+          
         })
        }
     }  
 
     
-  
+   function checkWin() {
+
+   }
 
    
   
