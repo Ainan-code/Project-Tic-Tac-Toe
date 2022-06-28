@@ -4,6 +4,7 @@
  let gameActive;
  let startGame = document.getElementById('startBtn');
  
+ 
   
 
 
@@ -14,36 +15,60 @@
   getname = () => name
   getmarker = () => marker
 
+  const playerArr = () => [];
+
  
  return {
   
-   name, marker
+   name, marker, playerArr
  }
 };
 
 const player1 = playerFactory('player1', "X");
 
-const player2 = playerFactory('player2', "O");
+const player2 = playerFactory('player2', "O" );
 
 
+let turn = 0;
+ 
 const Gameboard = (() => {
     const gameboard = [];
-    let currentplayer = player1;
+    let currentplayer;
+   
+    
     const player1array = [];
-    const player2array = [];
+    const player2array = []; 
+    const winCombinations =  [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6],
+    ]
     
     
    
     function switchPlayer() {
      
-      if (currentplayer == player1) {
-        currentplayer = player2;
-        
-      } 
-      else {
+      if (turn === 0) {
         currentplayer = player1;
+        turn = 1;
+        
         
       }
+
+     else {
+        currentplayer = player2;
+        turn = 0;
+        
+        
+      }
+    
+      return currentplayer
+      
     } 
     
    
@@ -53,34 +78,57 @@ const Gameboard = (() => {
         cell.addEventListener("click", function() {
         
 
-          if(cell.textContent !== "") {
+          if(cell.innerHTML !== "") {
             return;
           }
          
 
-          if(cell.textContent == "") {
-            let spot = parseInt(cell.getAttribute("data-cellid"));    
-            cell.textContent = `${currentplayer.marker}`;
-            cell.classList.add(`${currentplayer.marker}`);
-            gameboard.push(currentplayer.marker);
-            `${currentplayer.marker}`== player1 ? player1array.push(spot) : player2array.push(spot);
-            switchPlayer();
+          if(cell.innerHTML === "") {
+            
+            let spot = parseInt(cell.getAttribute("data-cellid")) 
+            cell.innerHTML = `${switchPlayer().marker}`;
+            cell.classList.add(`${switchPlayer().marker}`);
+            gameboard.push(`${switchPlayer().marker}`);
+           
+            turn === 0 ? (player2array.push(spot)) :  (player1array.push(spot));
+            turn === 0 ? (checkWin(player2array)) :  (checkWin(player1array));
+            
+           
+      
+           
+           
          
           }
           
-           
-            
+          
           
         })
        }
     }  
 
     
-   function checkWin() {
+   function checkWin(player) {
+
+   for(let i=0; i < winCombinations.length; i++) {
+    for(let j=0; j < winCombinations.length; j++) {
+        
+      if (player.includes(winCombinations[i][0]) && player.includes(winCombinations[i][1]) && player.includes(winCombinations[i][2]) && player.length >= 3)  {
+        console.log(`${player} has won`) 
+        break
+      } 
+    
+       
+
+
+
+    
+   }
+
+
 
    }
 
-   
+  }
   
       
 
@@ -101,15 +149,18 @@ const Gameboard = (() => {
      
     return {
       addMarker,
+      switchPlayer,
       
       getBoard,
       player1array,
       player2array,
+      checkWin
       
       
 
   }
 })();
+
     
 
 Gameboard.addMarker();
