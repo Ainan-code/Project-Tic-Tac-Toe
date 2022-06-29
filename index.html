@@ -9,7 +9,28 @@
     <script src="script.js" defer></script>
 </head>
 <body>
-  <h1>Tic Tac Toe </h1>
+    <h1>Tic Tac Toe </h1>
+  <div class="player-details">
+     <div id="playerOne">Player 1</div>
+     
+     <div id="PlayerTwo"> Player 2</div>
+  </div>
+
+  <form action="" class="name-inputs">
+    <label for="player0ne-name"> Player One : X</label>
+    <input type="text" id="playerOne-name" class="name" required>
+    <label for="playerTwo-name"> Player Two : O</label>
+    <input type="text" id="playerTwo-name" class="name" required>
+    <button type="submit" id="submitBtn"> Start Game</button>
+  </form>
+
+  <div class="modal">
+     <div class="message"></div>
+     <div class="replay">
+        <button type="button" class="replayBtn">Play again</button>
+     </div>
+  </div>
+
   <div class="main-content">
       <div id="gameboard">
           <div class="box" data-cellid="0" ></div>
@@ -21,8 +42,6 @@
           <div class="box" data-cellid="6" ></div>
           <div class="box" data-cellid="7" ></div>
           <div class="box" data-cellid="8" ></div>
-     </div>
-      <button id="startBtn">Start</button>
-  </div>   
+     
 </body>
 </html>

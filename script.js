@@ -1,8 +1,9 @@
 
- const board = document.querySelector('.gameboard')
+ const board = document.querySelector('#gameboard')
  const cells = document.querySelectorAll('[data-cellid]');
  let gameActive;
  let startGame = document.getElementById('startBtn');
+ let startBtn = document.getElementById("submitBtn");
  
  
   
@@ -113,7 +114,7 @@ const Gameboard = (() => {
     for(let j=0; j < winCombinations.length; j++) {
         
       if (player.includes(winCombinations[i][0]) && player.includes(winCombinations[i][1]) && player.includes(winCombinations[i][2]) && player.length >= 3)  {
-        console.log(`${player} has won`) 
+         Win()
         break
       } 
     
@@ -131,7 +132,17 @@ const Gameboard = (() => {
   }
   
       
-
+  function Win(player) {
+    let modal = document.querySelector(".modal");
+    let message = document.querySelector(".message");
+    modal.style.display = "flex";
+    if(player === player1array) {
+      message.innerHTML = `${player1.name} Wins This Round`
+    }
+    if(player === player2array) {
+      message.innerHTML = `${player2.name} Wins This Round`
+    }
+     }
  
 
    
@@ -163,7 +174,7 @@ const Gameboard = (() => {
 
     
 
-Gameboard.addMarker();
+
 
   
 
@@ -189,68 +200,53 @@ Gameboard.addMarker();
 
 const gameFlow = (() => {
 
-  let currentplayer = player1;
-
-  const winCombinations = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6],
-  ]
-
  
 
-  function gameRound() {
-    
-   firstTurn()
-   Gameboard.getBoard
-   Gameboard.renderGameboard
  
-   switchPlayer
+  startBtn.addEventListener("click", Gameon );
+  const nameInputs = document.querySelector(".name-inputs");
+  const names = document.querySelectorAll(".name");
 
-  
-  }
-  
-  
-  
-  
-  
-  const switchPlayer = () => {
-    currentplayer === player1 ? (currentplayer ===player2) : (currentplayer === player1);
+  function Gameon(event) {
 
-   }
-
-   function firstTurn() {
-    return currentplayer;
-  }
+   event.preventDefault();
     
+   
+    player1.name = names[0].value;
+    player2.name = names[1].value;
+    board.style.display = "grid";
+    nameInputs.style.display = "none";
+    Gameboard.addMarker();
+   
+  }
+
+
+  
+    
+
+
+  
+
+  
    
    return {
     
-    gameRound,
-    switchPlayer,
-    firstTurn,
+   Gameon,
 
     
    };
 
 })();   
      
+
     
 
 
 
  
   
-  
- 
 
   
 
 
-//cells.forEach(cell => cell.addEventListener('click',Gameboard.renderGameboard) )
-  //startGame.addEventListener('click', gameflow.setStage);
+
