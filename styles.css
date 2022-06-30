@@ -117,7 +117,8 @@ body {
     font-size: 30px;
     margin-bottom: 1rem;
     margin-top: 0;
-    color:white;
+    color:rgb(41, 25, 25);
+    width: fit-content;
 }
 
 .replayBtn {

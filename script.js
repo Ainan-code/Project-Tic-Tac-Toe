@@ -1,12 +1,14 @@
 
  const board = document.querySelector('#gameboard')
  const cells = document.querySelectorAll('[data-cellid]');
- let gameActive;
+
  let startGame = document.getElementById('startBtn');
  let startBtn = document.getElementById("submitBtn");
  
- 
-  
+ let modal = document.querySelector(".modal");
+ let message = document.querySelector(".message");
+ let winner = false;
+ let turn = 0;
 
 
 
@@ -16,12 +18,12 @@
   getname = () => name
   getmarker = () => marker
 
-  const playerArr = () => [];
+ 
 
  
  return {
   
-   name, marker, playerArr
+   name, marker
  }
 };
 
@@ -30,7 +32,7 @@ const player1 = playerFactory('player1', "X");
 const player2 = playerFactory('player2', "O" );
 
 
-let turn = 0;
+
  
 const Gameboard = (() => {
     const gameboard = [];
@@ -114,12 +116,21 @@ const Gameboard = (() => {
     for(let j=0; j < winCombinations.length; j++) {
         
       if (player.includes(winCombinations[i][0]) && player.includes(winCombinations[i][1]) && player.includes(winCombinations[i][2]) && player.length >= 3)  {
-         Win()
+        modal.style.display = "flex";
+    if(player === player1array) {
+      message.innerHTML = "Player X wins"
+      
+    }
+    if(player === player2array) {
+      message.innerHTML = "Player O wins"
+    }   winner = true;
         break
       } 
     
        
-
+    if (getBoard().length === 9 && winner === false ) {
+      message.innerHTML = "its a tie"
+    }
 
 
     
@@ -132,19 +143,8 @@ const Gameboard = (() => {
   }
   
       
-  function Win(player) {
-    let modal = document.querySelector(".modal");
-    let message = document.querySelector(".message");
-    modal.style.display = "flex";
-    if(player === player1array) {
-      message.innerHTML = `${player1.name} Wins This Round`
-    }
-    if(player === player2array) {
-      message.innerHTML = `${player2.name} Wins This Round`
-    }
-     }
  
-
+ 
    
 
  
@@ -174,30 +174,6 @@ const Gameboard = (() => {
 
     
 
-
-
-  
-
-   
-
-   
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 const gameFlow = (() => {
 
  
@@ -212,8 +188,8 @@ const gameFlow = (() => {
    event.preventDefault();
     
    
-    player1.name = names[0].value;
-    player2.name = names[1].value;
+   // player1.name = names[0].value;
+    //player2.name = names[1].value;
     board.style.display = "grid";
     nameInputs.style.display = "none";
     Gameboard.addMarker();
